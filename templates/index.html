@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}世界地震可視化アプリケーション{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="text-center h_p">
+        <h1>世界地震可視化アプリケーション</h1>
+        <form method="POST">
+            <label for="text">検索したい地震情報取得</label>
+            <h3>マグニチュード:<input type="number" name="mag1" step="0.1" value="0.0" min="0" max="10"> ~ <input type="number" name="mag2" step="0.1" value="10.0" min="0" max="10"></h3>
+            
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <select name="place">
+                    <option value="null" disabled selected>選択して下さい</option>
+                    {% for cname in cnames %}
+                        <h3><option value='{{ cname }}'>{{ cname }}</option></h3>
+                    {% endfor %}    
+                </select>
+                <input type="submit" value="検索開始"> 
+            </form>
+        </form>
+        <form action="/data" method="post">  
+            <button name="post_value" value="from post" id="button1" disabled>最新データをダウンロードする</button>  
+        </form> 
+        <!--<input type="button" value="24時間後にダウンロードできるようになります" onclick="getElementById('button1').disabled = false;"></input>-->
+        <input type="button" value="ここをクリックしてから24時間後にダウンロードできるようになります" id="next_day" onclick="func1()"></input>
+
+        
+    </div>
+    
+    <!--<img src="data:image/png;base64,{{ img }}" />-->
+
+    <div class="search_result">
+        <img src="data:image/png;base64,{{ img }}" />
+    </div>
+
+     <a href="/map" role="button">検索結果mapへ</a>
+</div>
+<script type="text/javascript" src="./static/js/main.js" ></script>
+{% endblock %}
+<!--<h3>場所:<input type='text' name="place"></h3>-->
